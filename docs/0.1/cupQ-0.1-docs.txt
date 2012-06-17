@@ -1,4 +1,4 @@
-::::::::::::::::::::::::::::::::::::::::cupQ:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::::::::   cupQ v0.1 2012  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 "cupQ" (aka "cupQuery")is a easy-to-use cross-browser open source JavaScript framework that allows querying and 
 manipulation of HTML DOM document using standard selectors to get output as an array of result values. 
 With cupQ, controlling HTML DOM is now everybody's cup of tea!
@@ -56,56 +56,318 @@ the on document ready event can be setup as follows:
 	
 	
 	
-USAGE - OVERVIEW:
+USAGE - QUERYING DOM USING SELECTORS:
 
-//getting nodes from document (default)
-_(".className");//get array of nodes with the class names
-_(".idName");//get current node  as an element of an array with the id name
-_(".className", document, 0);//get the first node as an element of an array with the class name
-_(".className", document, -1);//get the last node  as an element of an array with the class name
-_(".className", document, "odd");//get array of nodes with the class names appearing with odd positions
-_(".className", document, "even");//get array of nodes with the class names appearing with even positions
-_(".className", document, [1, 2, 4, 5]);//  0 index based -  get array of nodes with the class names appearing with positions metioned in the array
-_(".className", document, ">4");//  0 index based -  get array of nodes with the class names appearing with positions as per the expression i.e. position numbers > 4 in this example
-_(".className", document, "==4");//  0 index based -  get array of nodes with the class names appearing with positions as per the expression i.e. position numbers == 4 in this example
-_(".className", document, "<4");//  0 index based -  get array of nodes with the class names appearing with positions as per the expression i.e. position numbers < 4 in this example
-_(".className", document, ">=4");//  0 index based -  get array of nodes with the class names appearing with positions as per the expression i.e. position numbers >= 4 in this example
-_(".className", document, "<=4");//  0 index based -  get array of nodes with the class names appearing with positions as per the expression i.e. position numbers <= 4 in this example
-_(".className", document, myFunction);//  0 index based -  get array of nodes with the class names appearing with positions as per the out put based on the function "myFunction" ...like you can use a function that compares certain things to decide which nodes to choose
+For querying dom the expression involves 3 parameters .
+
+		_(selector, targetNode, indexQueryResultingArray).init();
+
+	"selector" is a string which can be a class name, an element id or simply a tag name. 
+	For class name the "selector" must be prefixed with a dot "." and for an id there must be a prefix of a hash "#"  
+
+	"targetNode" can be document or any DOM node or an array with nodes. This is optional (but in case the third parameter is "indexQueryResultingArray" is specified , you need to specify this one). If no value is supplied, the querying starts with the document object element of the DOM. 
+
+	"indexQueryResultingArray" is either a zero (0) based index number, or an array of numbers or a string with expression or a function that can be passed  that can target which node or nodes to pick if the query results in a list of nodes or a collection of DOM elements.
+	Using 0 is the first item in the resulting nodes list, and using -1 will refer to the last item in the resulting array if applicable. This parameter is optional. 
+
+	Note: to get query output as an array of resulting nodes, the "init()" is called for the target cupQ object. 
+	
+	
+	
+In the following are different types of usage of selectors to get the array of resulting nodes from the DOM:
+
+	Get array of nodes having the class name. For example for a class name "className" the expression will be as follows:
+		_(".className").init();
+
+	Get current node  as an element of an array with the id name. For example for a id name "idName" the expression will be as follows:
+		_(".idName").init();
+	
+	Get the first node as an element of an array with the specified class name.	
+		_(".className", document, 0).init();
+	
+	Get the last node  as an element of an array with the specified class name	
+		_(".className", document, -1).init();
+		
+	Get array of nodes with the class names appearing with odd positions -- here the expression "odd" is used as 3rd parameter. 
+	_(".className", document, "odd").init();
+		
+	Get array of nodes with the specified class names appearing with even positions -- here the expression "even" is used as 3rd parameter.
+	_(".className", document, "even").init();
+		
+	Get array of nodes with the specified class names appearing with positions mentioned in the array-- here the array of index numbers is used as 3rd parameter.. Note the array contains indexes that are 0 based. 
+	_(".className", document, [1, 2, 4, 5]).init();
+		
+	Get array of nodes with the class names appearing with positions as per the expression i.e. position numbers > 4 in this example. Note the expression contains index that is 0 based.
+	_(".className", document, ">4").init();
+		
+	Get array of nodes with the class names appearing with positions as per the expression i.e. position numbers == 4 in this example. Note the expression contains index that is 0 based.
+	_(".className", document, "==4").init();
+		
+	Get array of nodes with the class names appearing with positions as per the expression i.e. position numbers < 4 in this example. Note the expression contains index that is 0 based.
+	_(".className", document, "<4").init();
+		
+	Get array of nodes with the class names appearing with positions as per the expression i.e. position numbers >= 4 in this example. Note the expression contains index that is 0 based.
+	_(".className", document, ">=4").init();
+		
+	Get array of nodes with the class names appearing with positions as per the expression i.e. position numbers <= 4 in this example. Note the expression contains index that is 0 based.
+	_(".className", document, "<=4").init();
+		
+	Get array of nodes with the class names appearing with positions as per the out put based on the function "myFunction" ...like you can use a function that compares certain things to decide which nodes to choose.
+	_(".className", document, myFunction).init();
+	
+		where 
+	
+		myFunction = function (){	return [3, 5, 9];	}
+
+
+
+
+USAGE - GETTING THE PARENT NODE OR CHILD NODES OF THE PROVIDED SELECTORS:
+
+
+Getting array of parent and child nodes from document after querying using the specified selector. This includes [objectText] if there is no nodes present but some text present. For example in side paragraph only text is there. 
+
+	Get the array containing unique parent node of resulting nodes after querying using the specified selector (for example here the class name is used )
+	_("-.className", document, -1);
+	 
+	Get the array of child nodes of resulting nodes after querying using the specified selector (for example here the class name is used )
+	_("+.className", document, -1);
+	
+
+
+	
+	
+USAGE - QUERYING DOM USING SEQUENCE/TREE OF SELECTORS:
+
+There is a nice feature of cupQ that allows you to provide a string of sequence/tree of selectors (excluding the document object element) to get the resulting node. 
+Each selector has to be separated by a single blank space .
+
+Parent and child nodes expressions can also be used : 
+	
+	Example: 
+	
+	(_("p[1] span[0]").init());//sequence of selectors 
+	
+	(_("-p[1] span[0]").init());//parent of sequence of selectors 
+	
+	(_("+p[1]").init());//array of children  of sequence of selectors 
+	
+	
+
+
+
+USAGE - QUERYING DOM FROM CUSTOM NODE ONWARDS:
+
+
+By default, the cupQ starts Querying the HTML DOM from the root or the 'document' object element. 
+But this can be customised to start querying from any specific node of the DOM by supplying "targetNode" which can be document or any DOM node or an array with nodes. 
+
+
+
+Example of getting nodes from custom node
+
+	var targetNode = document.getElementById("myId");
+	Note: instead of using DOM methods above, you can even use cupQ to get the targetNode e.g. _("#myId").init(); 
+
+	_(".idName", targetNode);//get current node with the id name from the target Node onwards 
+	_(".className", targetNode);//get array of nodes from the target Node onwards with the class name
+	_(".className", targetNode, 0);//get first node from the target Node onwards with the class name
+	_(".className", targetNode, -1);//get last node from the target Node onwards with the class name
+
+
+Example of getting nodes (arrays) from an array containing custom nodes  
+
+	var targetNode = [document.getElementById("myId"),document.getElementById("myId2") ];
+	Note: instead of using DOM methods above, you can even use cupQ to get the targetNode e.g. [_("#myId").init(), _("#myId2").init()]; 
+	
+	_(".idName", targetNodesList);//get current nodes (array) with the id name from the target NodesLists onwards 
+	_(".className", targetNodesList);//get array of nodes from the target NodesLists onwards with the class name
+	_(".className", targetNodesList, 0);//get first node from the target NodesLists onwards  with the class name
+	_(".className", targetNodesList, -1);//get last node from the target NodesLists onwards  with the class name
+
+
+
+
+USAGE - QUERYING AND MANIPULATING HTML DOM:
+
+Using cupQ, You can do lot more than just querying HTML DOM to get array of nodes or HTML elements. You can use getter / setters to 
+target and manipulate different nodes and their attributes, styles, html and text contents. 
+
+	.html(val, index)
+	------------------
+	This is a both getter and setter to grab and manipulate the innerHTML of the target node(s). If no parameter is supplied, the method acts as a getter and returns the innerHTML of the target node(s) as an array. 
+	If parameter "val" is supplied then the value is set to the innerHTML of the target node(s). If index is supplied, then only the target node with thye specified index in the array of the reulting nodes is modified or the value is granbbed from. 
+	
+	e.g:
+	_("#idName").html();//get inner html
+	_("#idName").html("<b>hello</b>");//update inner html
+	_("p").html("hello", 0);//update inner html for the 0 indexed paragraph among the resulting array of paragraphs obtained after the query is executed.
+	
+ 
+	.htmlAppend(val, index)
+	-------------------------
+	This is a setter method (which also returns the final updated inner html )that appends  (adds content at the end of existing one) the provided content (via the "val" parameter) and also can work on specific indexed item in the resulting nodes.
+	
+	e.g:
+	_("-p").htmlAppend("<b>hello</b>", 1);//appends to inner html
+ 
+ 
+ 
+	.htmlPrepend(val, index)
+	-------------------------
+	This is a setter method (which also returns the final updated inner html )that pre-pends (adds content at the begining of existing one) the provided content (via the "val" parameter) and also can work on specific indexed item in the resulting nodes.
+	
+	e.g:
+	_("-p").htmlPrepend("<b>hello</b>", 1);//prepends to inner html
+ 
+ 
+ 
+	.text(val, index)
+	------------------
+	This is a both getter and setter to grab and manipulate the inner text (innerText) of the target node(s). If no parameter is supplied, the method acts as a getter and returns the inner text of the target node(s) as an array. 
+	If parameter "val" is supplied then the value is set to the inner text of the target node(s). If index is supplied, then only the target node with thye specified index in the array of the reulting nodes is modified or the value is granbbed from. 
+	
+	e.g:
+	_("#idName").text();//get inner text
+	_("#idName").text("hello");//update inner text
+	_("p").text("hello", 0);//update inner text for the 0 indexed paragraph among the resulting array of paragraphs obtained after the query is executed.
+	
+ 
+	.textAppend(val, index)
+	-------------------------
+	This is a setter method (which also returns the final updated inner text )that appends  (adds content at the end of existing one) the provided content (via the "val" parameter) and also can work on specific indexed item in the resulting nodes.
+	
+	e.g:
+	_("-p").textAppend("<b>hello</b>", 1);//appends to inner text
+ 
+ 
+ 
+	.textPrepend(val, index)
+	-------------------------
+	This is a setter method (which also returns the final updated inner text )that pre-pends (adds content at the begining of existing one) the provided content (via the "val" parameter) and also can work on specific indexed item in the resulting nodes.
+	
+	e.g:
+	_("-p").textPrepend("hello", 1);//prepends to inner text
+ 
+ 
+ 
+	.remove(index)
+	-------------------------
+	This is a setter method that removes the resulting nodes and returns blank array if no index is spplied. If index is supplied, it removes the target node selecting it from the resulting array of nodes and returns the updated array of resulting nodes. 
+	
+	e.g:
+	_("p").remove();//removes all the nodes
+	_("p").remove(1);//removes node of the mentioned index
+ 
+
+ 
+	.style()
+	-------------------------
+	This returns the array of style objects for the target nodes selected after querying using the selctors. Each individual style object can be then accessed using native DOM methods to manipulate for both getter and setter related activities. 
+ 
+	e.g:
+	_("p").style();//get array of style objects for the resulting nodes
+	_("p").style()[2];//get the target style object for corresponding index from the array of style objects obtained from the resulting nodes
+	((_("p").style())[0]).width='2440px';//setting the individual style "width" for any target style object
+	(_("p").style(0)[0].backgroundColor);//getting individual style for any target style object
+
+ 
+ 
+
+	.attribute(attributeName, indexQueryResultingArray, attributeValue)
+	----------------------------------------------------------------------------
+	This can be both getter and setter to manipulate attributes of the target nodes. 
+	
+	attributeName - this is the name of the attribute you want to grab or set the value for.
+	indexQueryResultingArray - this is optional. supply an index number to target the node in the resulting array of nodes. If 3rd parameter is used and you do not want to supply index use "" which will set it to default. 
+	attributeValue - this is optional. If supplied, this value will be set to the target attribute. 
+	
+	e.g:
+	(_("p").attribute("name"));//getter - here the target attribute is "name"
+	(_("p").attribute("style", "", "background:yellow"));//setter - without using any index (so that it affects all the nodes in the array )using setter for a attribute called "style" - alternative way to manipulate style of a node
+	(_("p").attribute("style", 1, "background:yellow"));//setter - using index (so that it affects only target indexed node )using setter for a attribute called "style" - alternative way to manipulate style of a node
+
+
+ 
+	.childIndexInParent(indexQueryResultingArray)
+	----------------------------------------------------------------------------
+	This is a getter that returns an array of index numbers for each ttarget nodes in their parent nodeList. If indexQueryResultingArray is supplied it returns only the index of the target node in it's parent nodeList. 
+	
+	e.g:
+	(_("p").childIndexInParent());//get index numbers of the nodes selected under their parent node;
+	(_("p").childIndexInParent(2))//for specific selected node ..the child index number of it in it's parent node 
+
+ 
+ 
+USAGE - BROWSER SNIFFING:
+The cupQ sniffs for the browser and opertaing system when an instance of cupQ runs. 
+The sniffing details can be found from properties of ".hostObject" .
+		
+		e.g:
+		
+		_().hostObject.browser;
+		_().hostObject.version;
+		_().hostObject.OS;
+		_().hostObject.navigator;
+		_().hostObject.navigatorVendor;
+		_().hostObject.userAgent;
+		
+		
+		
+
+
+
+
+ 
+ 
+USAGE - UTILITIES:
+There are a few utilities methods available.
+
+	.getUniqueArray(myArray)
+	--------------------------
+	This returns an array with unique items from the supplied array of items. 
+
+
+
+USAGE - SETTINGS AND DEVELOPER UTILITIES:
+
+
+	_().debug(val);
+	-----------------
+	This is a global flag that either turns on the debug mode (to allow "trace" messages in the browser console.) -- if you set this in any instance it will affect all the instances of cupQ running in that document.
+	The parameter can be true or false boolean value. 
+	The default is false. 
+	
+	e.g:
+	_().debug(true);//true sets global debug mode on.
+	
+	
+	_().trace(val);
+	-----------------
+	This iallows you to log your message to console window of the browser. This only writes to console only if the debug value is set to true. 
+	This is an easy to maintain feature that you can use to log your JavaScript messages to console, as you can turn on or off it using the debug mode. 
+	
+	e.g:
+	_().trace(message);//passing value of message to console
+	_().trace("some message");// only if the debug mode is on it logs the message to console;
+	
+	
+	
+	
+
+
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
 
 
 
 
-//getting parent and child nodes from document (default)...including [objectText] oif there is no nodes present but some text present (for example in side paragraph only text is there ...)
-_("-.className", document, -1);//get the parent node of the selector 
-_("+.className", document, -1);//get the array of child nodes of the selector 
-
-//getting nodes from custom node
-_(".idName", targetNode);//get current node with the id name from the target Node onwards 
-_(".className", targetNode);//get array of nodes from the target Node onwards with the class name
-_(".className", targetNode, 0);//get first node from the target Node onwards with the class name
-_(".className", targetNode, -1);//get last node from the target Node onwards with the class name
-
-
-//getting nodes (arrays) from custom node list 
-_(".idName", targetNodesList);//get current nodes (array) with the id name from the target NodesLists onwards 
-_(".className", targetNodesList);//get array of nodes from the target NodesLists onwards with the class name
-_(".className", targetNodesList, 0);//get first node from the target NodesLists onwards  with the class name
-_(".className", targetNodesList, -1);//get last node from the target NodesLists onwards  with the class name
 
 
 
 
-//getting node values
-_("#idName").html("hello");//update html
-_("#idName").text("hello");//update text in the node
-_("#idName").style("height", "123");//set style change
-_("#idName").style("height");//get style value
-_("#idName").remove();//remove this node
-_("#idName").attribute("style");//get attribute value
-_("#idName").attribute("style", "display:none");//set attribute value
 
-//other functions 
+
 
