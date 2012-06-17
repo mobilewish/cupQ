@@ -11,3 +11,101 @@ Version: 0.1
 Published: 2012
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+USAGE - OVERVIEW:
+
+Any cupQ method always returns results in a form of an array. So to track any individual values of the result you can always use
+index to specify the resulting item in the result array. 
+
+
+The cupQ object can be initiated using the "_()".
+
+Sample usage can be : 
+	_().debug(true);
+
+
+Instead of directly using "_()", you can assign a variable to it so that you can refer to the same cupQ object multiple times -- this helps in avoiding multiple instance of the cupQ object.
+So the previous example can be written as 
+
+	var myCupQ = _();
+	myCupQ.debug(true);
+
+
+
+
+Querying HTML DOM can only be done after the document is ready. So after basic setup like allowing debug mode or the similar, 
+the on document ready event can be setup as follows:   
+ 
+	var myCupQ = _();
+	myCupQ.onDocumentReady= function (){
+		
+		//add your code here that you want to load after dom is loaded or the document is ready...for example the following line is called after the document is ready 
+		myCupQ.importFiles(["js/importscripts.js"]);
+		
+		//here you can use multiple cupQ objects ..like the one in the following is a different one that the previous line
+		_().importFiles(["js/importMyNewScripts.js"]);
+
+
+		
+	}
+
+
+	
+	
+	
+	
+	
+USAGE - OVERVIEW:
+
+//getting nodes from document (default)
+_(".className");//get array of nodes with the class names
+_(".idName");//get current node  as an element of an array with the id name
+_(".className", document, 0);//get the first node as an element of an array with the class name
+_(".className", document, -1);//get the last node  as an element of an array with the class name
+_(".className", document, "odd");//get array of nodes with the class names appearing with odd positions
+_(".className", document, "even");//get array of nodes with the class names appearing with even positions
+_(".className", document, [1, 2, 4, 5]);//  0 index based -  get array of nodes with the class names appearing with positions metioned in the array
+_(".className", document, ">4");//  0 index based -  get array of nodes with the class names appearing with positions as per the expression i.e. position numbers > 4 in this example
+_(".className", document, "==4");//  0 index based -  get array of nodes with the class names appearing with positions as per the expression i.e. position numbers == 4 in this example
+_(".className", document, "<4");//  0 index based -  get array of nodes with the class names appearing with positions as per the expression i.e. position numbers < 4 in this example
+_(".className", document, ">=4");//  0 index based -  get array of nodes with the class names appearing with positions as per the expression i.e. position numbers >= 4 in this example
+_(".className", document, "<=4");//  0 index based -  get array of nodes with the class names appearing with positions as per the expression i.e. position numbers <= 4 in this example
+_(".className", document, myFunction);//  0 index based -  get array of nodes with the class names appearing with positions as per the out put based on the function "myFunction" ...like you can use a function that compares certain things to decide which nodes to choose
+
+
+
+
+
+
+//getting parent and child nodes from document (default)...including [objectText] oif there is no nodes present but some text present (for example in side paragraph only text is there ...)
+_("-.className", document, -1);//get the parent node of the selector 
+_("+.className", document, -1);//get the array of child nodes of the selector 
+
+//getting nodes from custom node
+_(".idName", targetNode);//get current node with the id name from the target Node onwards 
+_(".className", targetNode);//get array of nodes from the target Node onwards with the class name
+_(".className", targetNode, 0);//get first node from the target Node onwards with the class name
+_(".className", targetNode, -1);//get last node from the target Node onwards with the class name
+
+
+//getting nodes (arrays) from custom node list 
+_(".idName", targetNodesList);//get current nodes (array) with the id name from the target NodesLists onwards 
+_(".className", targetNodesList);//get array of nodes from the target NodesLists onwards with the class name
+_(".className", targetNodesList, 0);//get first node from the target NodesLists onwards  with the class name
+_(".className", targetNodesList, -1);//get last node from the target NodesLists onwards  with the class name
+
+
+
+
+//getting node values
+_("#idName").html("hello");//update html
+_("#idName").text("hello");//update text in the node
+_("#idName").style("height", "123");//set style change
+_("#idName").style("height");//get style value
+_("#idName").remove();//remove this node
+_("#idName").attribute("style");//get attribute value
+_("#idName").attribute("style", "display:none");//set attribute value
+
+//other functions 
+
