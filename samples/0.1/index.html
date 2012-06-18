@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>cupQ- v0.1-Sample</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0; user-scalable=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<META NAME="GOOGLEBOT" CONTENT="NOARCHIVE">
+<META NAME="ROBOTS" CONTENT="NONE">
+<style type="text/css"  charset="utf-8" >
+
+</style>
+<script type="text/javascript" charset="utf-8" src="../../bin/0.1/cupQ-0.1-min.js"></script>
+<script type="text/javascript" charset="utf-8">
+//Test scripts. Please uncomment the desired line below to run the test. 
+
+
+var e = _();
+e.debug(true);
+e.importAtHead(["js/importscripts.js"]);//import css, script at head after document ready ...should be declared outside document ready .this is not at runtime...rather at the begining 
+e.importAtBody(["js/importscripts.js", "js/importscripts2.js"]);//import css, script at body after document ready ...should be declared outside document ready ..this is not at runtime...rather at the begining 
+
+e.onDocumentReady=function(){
+//e.importFiles(["js/importscripts.js"]);//this is import for js or css at any point of time...all the files will be imported to header ...this can be called any time only after the document is ready 
+//alert(_("p", document, "odd").init());
+//alert(_("p", document, mySamplefunction).init());
+//alert(_("p", document, "==5").init());
+//alert(_("p", document, "<=3").init());
+//alert((_("body").init())[0]);
+//alert(_("p", ((_("body").init())[0]), [0, 1, 3, 4]).init()); // passing body instead of document
+//alert(_("span", (_("p").init())[1], [0,1,2, 3, 4]).init()); // passing p and then get spans in that p 
+//alert(_("span", (_("p").init()), [0,1,2, 3, 4]).init()); // passing p and then get all spans  in that p 
+//alert((_("p", document).html("22"))[1])
+//alert((_("-p", document, "<=3").init()));
+//alert((_("+p", document, "<=3").init()));
+//alert((_("p", document, -1).init()));
+//alert((_("body").html())[0]);//get html
+//alert((_("body").html("hello")));//set html
+//alert((_("-p").html("hello", 0)));//set html
+//alert((_("-p").init()));
+//alert((_("-p").htmlAppend("<b>:)</b>", 1)));//set html
+//alert((_("p").htmlAppend("<b>:)</b>")));//set html
+//alert((_("p").htmlPrepend("<b>:)</b>", 1)));//set html
+//alert((_("p").htmlPrepend("<b>:)</b>")));//set html
+//alert((_("body").text())[0])//get innerText
+//alert((_("body").text("test")))//set innerText
+//alert((_("p").text("test", 1)))//set innerText
+//alert((_("p").textAppend(":)", 1)));//set text
+//alert((_("p").textAppend(":)")));//set text
+//alert((_("p").textPrepend(":)", 1)));//set text
+//alert((_("p").textPrepend(":)")));//set text
+//alert(_("p").remove());//removes all the nodes
+//alert(_("p").remove(1));//removes node of the mentioned index
+//alert(((_("p").style())[0]));//set text
+//((_("p").style())[0]).width='2440px'//set 
+//alert(_("p").style(0)[0].backgroundColor='green')
+//alert(_("p").attribute("style"))
+//alert(_("p").attribute("style", "", "background:yellow"));
+//alert(_("p").attribute("style", 1, "background:yellow"));
+//alert(_("p").childIndexInParent());//get index numbers of the nodes selected under their parent node;
+//alert(_("p").childIndexInParent(2))//for specific selected node ..the child index number of it in it's parent node 
+//alert(_("p[1] span[0]").init());//sequence of selectors 
+//alert(_("-p[1] span[0]").init());//parent of sequence of selectors 
+//alert(_("+p[1]").init());//array of children  of sequence of selectors 
+//alert(_().getUniqueArray(myArray);//returns the array with the unique elements only 
+//alert(_().hostObject.browser +" "+_().hostObject.version+" "+_().hostObject.OS)
+//alert(_().hostObject.navigator +" "+_().hostObject.navigatorVendor+" "+_().hostObject.userAgent);
+//_().debug(true);//true sets global debug mode on..false sets global debug mode off 
+
+
+//_().trace("some message");// only if the debug mode is on it logs the message to console;
+/*
+in case you do not want to init the _() multiple times, just assign it to variable and use it as the same object to trace or call other utilities functions. 
+var c = _();
+c.trace("some message"); // only if the debug mode is on it logs the message to console;
+c.trace("some message2");
+c.trace("some message3");
+*/
+
+
+
+
+
+}
+
+function mySamplefunction(){return [3, 5, 9];}
+											
+											
+
+
+
+
+
+
+
+</script>
+
+
+</head>
+<body onload="console.log('onload called')">
+
+<p style="background-color:red; width:111px">This is first paragraph.</p>
+<p>This is second paragraph.<span>This is first span in second paragraph.</span><span>This is second span in second paragraph.</span></p>
+<p>This is third paragraph.</p>
+<p>This is fourth paragraph.</p>
+<p>This is fifth paragraph.<span>This is first span in fifth paragraph.</span></p>
+<p>This is sixth paragraph.</p>
+
+</body>
+</html>
